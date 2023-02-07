@@ -1,4 +1,7 @@
 # Route256-2023
-## Contest
-
 ## Sandbox
+<details>
+  <summary>Сумма к оплате</summary>
+</details>
+
+## Contest
