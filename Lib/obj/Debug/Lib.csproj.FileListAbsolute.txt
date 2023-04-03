@@ -1,0 +1,6 @@
+C:\Users\Компуктер\source\repos\Route256-2023\Lib\bin\Debug\Lib.dll
+C:\Users\Компуктер\source\repos\Route256-2023\Lib\bin\Debug\Lib.pdb
+C:\Users\Компуктер\source\repos\Route256-2023\Lib\obj\Debug\Lib.csproj.AssemblyReference.cache
+C:\Users\Компуктер\source\repos\Route256-2023\Lib\obj\Debug\Lib.csproj.CoreCompileInputs.cache
+C:\Users\Компуктер\source\repos\Route256-2023\Lib\obj\Debug\Lib.dll
+C:\Users\Компуктер\source\repos\Route256-2023\Lib\obj\Debug\Lib.pdb
