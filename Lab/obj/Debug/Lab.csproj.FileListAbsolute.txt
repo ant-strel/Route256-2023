@@ -6,3 +6,6 @@ C:\Users\Компуктер\source\repos\Route256-2023\Lab\obj\Debug\Lab.csproj.
 C:\Users\Компуктер\source\repos\Route256-2023\Lab\obj\Debug\Lab.csproj.CoreCompileInputs.cache
 C:\Users\Компуктер\source\repos\Route256-2023\Lab\obj\Debug\Lab.exe
 C:\Users\Компуктер\source\repos\Route256-2023\Lab\obj\Debug\Lab.pdb
+C:\Users\Компуктер\source\repos\Route256-2023\Lab\bin\Debug\Lib.dll
+C:\Users\Компуктер\source\repos\Route256-2023\Lab\bin\Debug\Lib.pdb
+C:\Users\Компуктер\source\repos\Route256-2023\Lab\obj\Debug\Lab.csproj.CopyComplete
