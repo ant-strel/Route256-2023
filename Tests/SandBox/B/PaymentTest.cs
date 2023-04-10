@@ -19,15 +19,19 @@ namespace Tests.SandBox
             string[] asserts = Directory.GetFiles(path, "*.a");
             for(int i = 0; i < files.Length; i++)
             {
-                string[] lines = File.ReadAllLines(files[i]);
-                string[] aLines = File.ReadAllLines(asserts[i]);
-                int count = Convert.ToInt32(lines[0]);
-                int offset = 1;
-                for(int j = 0; j < count; j++)
+                Task.Run(() =>
                 {
-                    Assert.AreEqual(aLines[j], Payment.SumGoods(lines[offset],lines[offset + 1]));
-                    offset+=2;
-                }
+                    string[] lines = File.ReadAllLines(files[i]);
+                    string[] aLines = File.ReadAllLines(asserts[i]);
+                    int count = Convert.ToInt32(lines[0]);
+                    int offset = 1;
+                    for (int j = 0; j < count; j++)
+                    {
+                        Assert.AreEqual(aLines[j], Payment.SumGoods(lines[offset], lines[offset + 1]));
+                        offset += 2;
+                    }
+                });
+
             }
 
         }

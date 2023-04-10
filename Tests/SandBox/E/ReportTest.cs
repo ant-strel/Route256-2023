@@ -20,6 +20,7 @@ namespace Tests.SandBox
 
             for (int i = 0; i < files.Length; i++)
             {
+                Task.Run(() => { 
                 string[] lines = File.ReadAllLines(files[i]);
                 string[] aLines = File.ReadAllLines(asserts[i]);
 
@@ -33,6 +34,7 @@ namespace Tests.SandBox
                     string expected = aLines[j];
                    Assert.AreEqual(result,expected);
                 }
+                });
             }
         }
 

@@ -20,6 +20,7 @@ namespace Tests.SandBox
   
             for (int i = 0; i < files.Length; i++)
             {
+                Task.Run(() => {
                 string[] lines = File.ReadAllLines(files[i]);
                 string[] aLines = File.ReadAllLines(asserts[i]);
                 List<List<string>> actual = new List<List<string>>();
@@ -48,6 +49,7 @@ namespace Tests.SandBox
                         Assert.AreEqual(actual[j][k], res[k]);
                     }
                 }
+                });
             }
         }
     }

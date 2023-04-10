@@ -11,22 +11,68 @@ namespace Lib
     {
         public static List<string> FriendsRecomendations(int userInputCount, int pairCount, List<string> pairs)
         {
-            SortedDictionary<int, List<int>> usersInput = new SortedDictionary<int, List<int>>();
+            var usersCount = userInputCount;
+            var pairsCount = pairCount;
+            var usersFriends = Enumerable.Range(1, usersCount).ToDictionary(x => x, f => new SortedSet<int>());
 
-            Dictionary<int, List<int>> usersWithFriends = new Dictionary<int, List<int>>();
-
-            Dictionary<string, SameFriend> sameFriends = new Dictionary<string, SameFriend>();
-
-            for (int i = 1; i <= userInputCount; i++)
+            for (int i = 0; i < pairsCount; i++)
             {
-                usersWithFriends.Add(i, new List<int>());
+                var usersPair = pairs[i].Split(' ').Select(x => int.Parse(x)).ToList();
+                usersFriends[usersPair[0]].Add(usersPair[1]);
+                usersFriends[usersPair[1]].Add(usersPair[0]);
+            }
+
+            var possibleFiends = new Dictionary<int, SortedSet<int>>();
+
+            foreach (var user in usersFriends)
+            {
+                var key = user.Key;
+                possibleFiends.Add(key, new SortedSet<int>());
+
+                var maxFriendsIntersect = 0;
+                foreach (var friend in user.Value)
+                {
+                    List<int> tempRecommended = new List<int>();
+
+                    foreach(var fr in usersFriends[friend])
+                    {
+                        if (fr == user.Key)
+                            continue;
+                        if (user.Value.Contains(fr))
+                            continue;
+                        tempRecommended.Add(fr);
+                    }
+                        
+
+                    foreach(var tempFriend in tempRecommended)
+                    {
+                        var currentIntersect = user.Value.Intersect(usersFriends[tempFriend]).Count();
+                        //пересечение друзей текущего юзера и друзей потенциального рекомендуемого друга
+                        if (currentIntersect == 0)
+                            continue;
+
+                        if (currentIntersect > maxFriendsIntersect)
+                        {
+                            maxFriendsIntersect = currentIntersect;
+                            possibleFiends[key].Clear();
+                            possibleFiends[key].Add(tempFriend);
+                            continue;
+                        }
+                        //если количество такое же, добавляем в рекомендуемые
+                        if (currentIntersect == maxFriendsIntersect)
+                        {
+                            possibleFiends[key].Add(tempFriend);
+                        }
+                    }
+                }
             }
 
             List<string> outputs = new List<string>();
-
-            long validate = 0;
-            long getIntersect = 0;
-            long getMax = 0;
+            
+            foreach (var userPossible in possibleFiends)
+            {
+                outputs.Add(userPossible.Value.Count == 0 ? "0" : string.Join(" ", userPossible.Value));
+            }
 
             return outputs;
         }

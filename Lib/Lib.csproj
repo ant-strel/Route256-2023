@@ -43,9 +43,12 @@
   <ItemGroup>
     <Compile Include="ETable.cs" />
     <Compile Include="Friends.cs" />
+    <Compile Include="Map.cs" />
     <Compile Include="PairProg.cs" />
     <Compile Include="Payment.cs" />
     <Compile Include="Report.cs" />
+    <Compile Include="Rhymes.cs" />
+    <Compile Include="Scheduller.cs" />
     <Compile Include="TestInput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TimeInterval.cs" />

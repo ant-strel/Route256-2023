@@ -20,59 +20,62 @@ namespace Tests.SandBox
 
             for (int i = 0; i < files.Length; i++)
             {
-                string[] inputs = File.ReadAllLines(files[i]);
-                string[] aLines = File.ReadAllLines(asserts[i]);
-
-                int count = Convert.ToInt32(inputs[0]);
-                int offset = 1;
-                List<string> result = new List<string>();
-                List<List<string>> input = new List<List<string>>();
-                List<List<string>> output = new List<List<string>> ();
-                List<List<string>> expected = new List<List<string>> ();
-                List<string> buffer = new List<string>();
-                for(int j = 2; j < inputs.Length; j++)
+                Task.Run(() =>
                 {
-                    if (inputs[j] == "") 
+                    string[] inputs = File.ReadAllLines(files[i]);
+                    string[] aLines = File.ReadAllLines(asserts[i]);
+
+                    int count = Convert.ToInt32(inputs[0]);
+                    int offset = 1;
+                    List<string> result = new List<string>();
+                    List<List<string>> input = new List<List<string>>();
+                    List<List<string>> output = new List<List<string>>();
+                    List<List<string>> expected = new List<List<string>>();
+                    List<string> buffer = new List<string>();
+                    for (int j = 2; j < inputs.Length; j++)
                     {
+                        if (inputs[j] == "")
+                        {
+                            input.Add(new List<string>(buffer));
+                            buffer = new List<string>();
+                        }
+                        else
+                        {
+                            buffer.Add(inputs[j]);
+                        }
+                    }
+                    if (buffer.Count > 0)
                         input.Add(new List<string>(buffer));
-                        buffer = new List<string>();
-                    }
-                    else
+                    buffer = new List<string>();
+                    foreach (var inp in input)
                     {
-                        buffer.Add(inputs[j]);
+                        List<string> res = ETable.Calculate(inp);
+                        output.Add(new List<string>(res));
                     }
-                }
-                if(buffer.Count > 0)
-                    input.Add(new List<string>(buffer));
-                buffer = new List<string>();
-                foreach(var inp in input)
-                {
-                    List<string> res = ETable.Calculate(inp);
-                    output.Add(new List<string>(res));
-                }
-                for (int j = 0; j < aLines.Length; j++)
-                {
-                    if (aLines[j] == "")
+                    for (int j = 0; j < aLines.Length; j++)
                     {
-                        expected.Add(new List<string>(buffer));
-                        buffer = new List<string>();
+                        if (aLines[j] == "")
+                        {
+                            expected.Add(new List<string>(buffer));
+                            buffer = new List<string>();
+                        }
+                        else
+                        {
+                            buffer.Add(aLines[j]);
+                        }
                     }
-                    else
-                    {
-                        buffer.Add(aLines[j]);
-                    }
-                }
 
-                Assert.IsTrue(output.Count == expected.Count);
-                for (int j = 0; j < output.Count; j++)
-                {
-                    Assert.IsTrue(output[j].Count == expected[j].Count);
-
-                    for (int k = 0; k < output[j].Count; k++)
+                    Assert.IsTrue(output.Count == expected.Count);
+                    for (int j = 0; j < output.Count; j++)
                     {
-                        Assert.AreEqual(expected[j][k], output[j][k]);
+                        Assert.IsTrue(output[j].Count == expected[j].Count);
+
+                        for (int k = 0; k < output[j].Count; k++)
+                        {
+                            Assert.AreEqual(expected[j][k], output[j][k]);
+                        }
                     }
-                }
+                });
                 
             }
         }
